@@ -10,7 +10,7 @@ its own bubble and icon.
 > [hearthlight](https://github.com/jmkelly/hearthlight) — if you like this,
 > you'll like that.
 
-![Go](https://img.shields.io/badge/Go-%3E%3D1.24-00ADD8?logo=go&logoColor=white)
+![Go](https://img.shields.io/badge/Go-%3E%3D1.27-00ADD8?logo=go&logoColor=white)
 [![License: Unlicense](https://img.shields.io/badge/license-Unlicense-blue.svg)](https://unlicense.org/)
 
 ## What you get
@@ -34,7 +34,7 @@ its own bubble and icon.
 
 ## Quick start
 
-Requirements: Go 1.24 or newer. Real scanning works on Linux, macOS and
+Requirements: Go 1.27 or newer. Real scanning works on Linux, macOS and
 Windows without elevated privileges.
 
 ```sh
