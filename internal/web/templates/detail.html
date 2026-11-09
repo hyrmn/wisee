@@ -1,0 +1,40 @@
+{{define "detail"}}
+<div class="panel">
+  <div class="panel-head kind-{{.Kind}}">
+    <span class="panel-icon">{{icon .Kind 30}}</span>
+    <div class="panel-title">
+      <h2>{{label .Device}}</h2>
+      {{if .Online}}<span class="status online">online now</span>
+      {{else}}<span class="status offline">offline &middot; last seen {{human .LastSeen}}</span>{{end}}
+    </div>
+    <button class="close" title="Close" onclick="document.getElementById('detail').innerHTML=''">&times;</button>
+  </div>
+  <dl class="facts">
+    <dt>IP</dt><dd>{{.IP}}</dd>
+    {{if .MAC}}<dt>MAC</dt><dd class="mono">{{.MAC}}</dd>{{end}}
+    {{if .Vendor}}<dt>Vendor</dt><dd>{{.Vendor}}</dd>{{end}}
+    <dt>Kind</dt><dd>{{.Kind}}</dd>
+    {{if .Self}}<dt>Role</dt><dd>this host</dd>{{end}}
+    <dt>First seen</dt><dd>{{human .FirstSeen}}</dd>
+    <dt>Last seen</dt><dd>{{human .LastSeen}}</dd>
+  </dl>
+  <h3>Services <span class="muted">({{len .Services}})</span></h3>
+  {{if .Services}}
+  <ul class="services">
+    {{range .Services}}
+    <li class="{{if .Online}}online{{else}}offline{{end}}">
+      <span class="svc-icon">{{svcicon .Name 16}}</span>
+      <span class="svc-name">{{.Name}}</span>
+      <span class="svc-port mono">:{{.Port}}</span>
+      {{if .Title}}<span class="svc-title" title="{{.Title}}">{{.Title}}</span>{{end}}
+      <span class="svc-seen">{{if .Online}}active{{else}}{{human .LastSeen}}{{end}}</span>
+    </li>
+    {{end}}
+  </ul>
+  {{else}}
+  <p class="muted">No TCP services discovered on this device.</p>
+  {{end}}
+</div>
+{{end}}
+
+{{define "scan-state"}}<span class="scan-state">{{.}}</span>{{end}}

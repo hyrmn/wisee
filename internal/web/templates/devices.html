@@ -1,0 +1,24 @@
+{{define "devices"}}
+{{range .Devices}}{{if .Edge}}
+<div class="edge" id="edge-{{.ID}}" style="left:{{fnum .Edge.X1}}px;top:{{fnum .Edge.Y1}}px;width:{{fnum .Edge.Len}}px;transform:rotate({{fnum .Edge.Deg}}deg);"></div>
+{{end}}{{end}}
+{{range .Devices}}
+<div class="device {{if .Online}}online{{else}}offline{{end}} {{if .IsHub}}hub{{end}} kind-{{.Kind}}" data-id="{{.ID}}"
+     style="left:{{fnum .X}}px;top:{{fnum .Y}}px"
+     hx-get="/devices/{{.ID}}" hx-target="#detail" hx-swap="innerHTML">
+  {{if .Online}}<span class="halo"></span><span class="halo halo-2"></span>{{end}}
+  <span class="bubble">{{icon .Kind 22}}</span>
+  {{if and .Online .Services}}<span class="svc-count">{{len .Services}}</span>{{end}}
+  <span class="dev-label">{{label .Device}}</span>
+  {{if not .Online}}<span class="seen-label">last seen {{human .LastSeen}}</span>{{end}}
+  {{range .Services}}
+  <div class="svc {{if .Online}}online{{else}}offline{{end}}" style="left:{{fnum .X}}px;top:{{fnum .Y}}px">
+    <span class="svc-bubble" title="{{.Name}} :{{.Port}}{{if .Title}} — {{.Title}}{{end}}">{{svcicon .Name 12}}</span>
+    <span class="svc-label">{{.Name}}:{{.Port}}</span>
+  </div>
+  {{end}}
+</div>
+{{end}}
+<div id="stats" hx-swap-oob="true">{{template "stats" .Stats}}</div>
+<span id="scan-state" hx-swap-oob="true" class="scan-state">{{.ScanState}}</span>
+{{end}}

@@ -1,0 +1,11 @@
+# Build output
+/bin/
+/dist/
+
+# SQLite data files (default wisee.db, or wherever -db points)
+*.db
+*.db-wal
+*.db-shm
+
+# Go test binaries
+*.test

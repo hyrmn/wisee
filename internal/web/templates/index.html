@@ -1,0 +1,47 @@
+{{define "index"}}<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wi-See</title>
+<link rel="stylesheet" href="/static/app.css">
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="%234cc9f0" d="M12 17.5a1.8 1.8 0 1 0 0 3.6 1.8 1.8 0 0 0 0-3.6zm0-4.7c-1.9 0-3.6.74-4.9 1.95l1.7 1.7A4.4 4.4 0 0 1 12 15.3c1.24 0 2.36.5 3.2 1.35l1.7-1.7A6.4 6.4 0 0 0 12 12.8zm0-4.7c-3.9 0-7.5 1.55-10.1 4.1l1.7 1.7A11.2 11.2 0 0 1 12 10.6c3.2 0 6.1 1.3 8.4 3.4l1.7-1.7A13.2 13.2 0 0 0 12 8.1z"/></svg>'>
+<script src="/static/htmx.min.js" defer></script>
+<script src="/static/app.js" defer></script>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    {{icon "router" 26}}
+    <h1>Wi-See</h1>
+  </div>
+  <div id="stats">{{template "stats" .Stats}}</div>
+  <div class="actions">
+    <span id="scan-state" class="scan-state"></span>
+    <button class="scan-btn" hx-post="/scan" hx-target="#scan-state" hx-swap="innerHTML">Scan now</button>
+  </div>
+</header>
+<main class="layout">
+  <div id="map-wrap">
+    <div id="map">
+      <div id="viewport" hx-get="/map/devices" hx-trigger="load, every 5s, refresh" hx-swap="innerHTML"></div>
+    </div>
+    <div class="map-hint">drag to pan &middot; scroll to zoom &middot; drag bubbles to arrange &middot; click for details</div>
+  </div>
+  <aside id="detail">
+    <div class="placeholder">
+      {{icon "router" 40}}
+      <p>Click a device bubble to inspect its services.</p>
+    </div>
+  </aside>
+</main>
+<footer class="foot">Wi-See {{.Version}} &middot; devices never leave the map, they just fade</footer>
+</body>
+</html>
+{{end}}
+
+{{define "stats"}}
+<span class="stat online">{{.Online}} online</span>
+<span class="stat">{{.Total}} devices</span>
+<span class="stat">{{.Services}} services</span>
+{{end}}
